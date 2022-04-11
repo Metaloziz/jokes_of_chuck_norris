@@ -1,0 +1,27 @@
+* {
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+}
+
+.App {
+    width: 100vw;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: rgba(59, 53, 53, 0.87);
+    gap: 50px;
+}
+
+.card {
+    height: 400px;
+    width: 200px;
+    border: black 2px solid;
+    border-radius: 10px;
+    background-color: seagreen;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: grab;
+}

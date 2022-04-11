@@ -1,0 +1,46 @@
+@import "src/style/mixins";
+
+.container {
+  @include container();
+
+  .display {
+    @include displayFlexCenter();
+    flex-direction: column;
+    border: black 2px solid;
+    gap: 3px;
+    background: antiquewhite;
+    height: 80%;
+    width: 90%;
+
+    .displayText {
+      @include displayFlexCenter();
+      flex-direction: column;
+      padding: 2%;
+      height: 60%;
+      width: 90%;
+      border: black 2px solid;
+      justify-content: space-evenly;
+    }
+  }
+
+  .buttons {
+    @include displayFlexCenter();
+    justify-content: space-evenly;
+    width: 100%;
+
+
+  }
+
+  button {
+    height: 100px;
+    width: 200px;
+    font-size: 20px;
+    font-weight: 600;
+  }
+
+}
+
+
+
+
+

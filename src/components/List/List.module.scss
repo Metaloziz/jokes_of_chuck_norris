@@ -1,0 +1,16 @@
+@import "src/style/mixins.scss";
+
+.container {
+  @include container();
+  padding-top: 1%;
+  justify-content: start;
+  gap: 1%;
+
+  .item {
+    height: auto;
+    width: 90%;
+    background-color: antiquewhite;
+  }
+}
+
+
