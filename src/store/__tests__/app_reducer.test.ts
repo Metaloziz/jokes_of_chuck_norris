@@ -1,8 +1,7 @@
 import {
   addJokeAC,
-  app_reducer,
-  deleteJokeFromListAC,
-  setJokeAC
+  app_reducer, deleteCurrentJokeAC, deleteJokeFromListAC, getJokeTC,
+
 } from "store/app_reducer";
 import {RootStateType} from "store/store";
 import {JokeType} from "api/api";
@@ -13,15 +12,17 @@ let joke: JokeType
 let jokes: JokeType[]
 
 beforeEach(() => {
+
+  joke = {id: '1', value: 'passage'}
+  jokes = [{id: '2', value: 'passage'}, {id: '3', value: 'reward'}]
+
   initialState = {
     appState: {
       joke: {id: '', value: ''},
-      jokes: []
+      jokes: [...jokes]
     }
   }
 
-  joke = {id: '1', value: 'passage'}
-  jokes = [{id: '1', value: 'passage'}, {id: '2', value: 'reward'}]
 
 })
 
@@ -31,7 +32,7 @@ describe('app reducer', () => {
 
     const {appState} = initialState
 
-    const action = setJokeAC(joke)
+    const action = getJokeTC.fulfilled(joke, '')
     const endState = app_reducer(appState, action)
 
     expect(endState).not.toBe(appState)
@@ -48,13 +49,24 @@ describe('app reducer', () => {
     expect(endState.jokes[0]).toBe(joke)
   })
 
-  test('delete item from jokes', () => {
+  test('delete last joke from jokes', () => {
 
     const {appState} = initialState
     const action = deleteJokeFromListAC()
     const endState = app_reducer(appState, action)
 
+    expect(endState).not.toBe(appState)
+    expect(endState.jokes.length).toBe(appState.jokes.length - 1)
 
+  })
 
+  test('delete current joke', () => {
+
+    const {appState} = initialState
+    const action = deleteCurrentJokeAC('2')
+    const endState = app_reducer(appState, action)
+
+    expect(endState).not.toBe(appState)
+    expect(endState.jokes.length).toBe(appState.jokes.length - 1)
   })
 })

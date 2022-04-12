@@ -5,34 +5,37 @@ const initialState = {
   joke: {
     id: '',
     value: ''
-  },
+  } as JokeType,
   jokes: [] as JokeType[]
 }
+
+export const getJokeTC = createAsyncThunk('app/getJokeTC', async () => {
+  const res = await appRequest.getJoke()
+  return res.data
+})
 
 export const slice = createSlice({
   name: 'app',
   initialState,
   reducers: {
-    setJokeAC(state, action: PayloadAction<JokeType>) {
-      state.joke = action.payload
-    },
     addJokeAC(state, action: PayloadAction<JokeType>) {
-      state.jokes.push(action.payload)
+      state.jokes.unshift(action.payload)
     },
     deleteJokeFromListAC(state) {
-      state.jokes.pop()
+      let arrLength = state.jokes.length
+      state.jokes.splice(arrLength - 1, 1)
+    },
+    deleteCurrentJokeAC(state, action: PayloadAction<string>) {
+      state.jokes = state.jokes.filter((el) => el.id !== action.payload)
     }
   },
+  extraReducers: builder => {
+    builder.addCase(getJokeTC.fulfilled, (state, action) => {
+      state.joke = action.payload
+    })
+  }
 })
 
 export const app_reducer = slice.reducer
-export const {setJokeAC, addJokeAC, deleteJokeFromListAC} = slice.actions
+export const {addJokeAC, deleteJokeFromListAC, deleteCurrentJokeAC} = slice.actions
 
-export const getJokeTC = createAsyncThunk('app/getJokeTC', async (params, {dispatch}) => {
-
-  const res = await appRequest.getJoke()
-
-  const joke = res.data
-  dispatch(setJokeAC(joke))
-
-})

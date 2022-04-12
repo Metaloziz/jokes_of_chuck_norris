@@ -5,6 +5,8 @@ import {getJokesSelector} from "utils/selectors";
 
 export const List = () => {
 
+  console.log('list - render')
+
   const jokes = useSelector(getJokesSelector)
 
   return <div className={style.container}>
