@@ -31,7 +31,7 @@ export const slice = createSlice({
     deleteJokesAC(state) {
       state.jokes = []
       localStorage.removeItem('jokes')
-    }
+    },
   },
   extraReducers: builder => {
     builder.addCase(getJokeTC.fulfilled, (state, action) => {
