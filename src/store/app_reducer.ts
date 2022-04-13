@@ -27,6 +27,10 @@ export const slice = createSlice({
     },
     deleteCurrentJokeAC(state, action: PayloadAction<string>) {
       state.jokes = state.jokes.filter((el) => el.id !== action.payload)
+    },
+    deleteJokesAC(state) {
+      state.jokes = []
+      localStorage.removeItem('jokes')
     }
   },
   extraReducers: builder => {
@@ -37,5 +41,10 @@ export const slice = createSlice({
 })
 
 export const app_reducer = slice.reducer
-export const {addJokeAC, deleteJokeFromListAC, deleteCurrentJokeAC} = slice.actions
+export const {
+  addJokeAC,
+  deleteJokeFromListAC,
+  deleteCurrentJokeAC,
+  deleteJokesAC
+} = slice.actions
 

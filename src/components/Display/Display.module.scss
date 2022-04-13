@@ -28,14 +28,10 @@
     justify-content: space-evenly;
     width: 100%;
 
-
   }
 
   button {
-    height: 100px;
-    width: 200px;
-    font-size: 20px;
-    font-weight: 600;
+    @include button();
   }
 
 }

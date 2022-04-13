@@ -3,14 +3,29 @@
 .container {
   @include container();
   padding-top: 1%;
-  justify-content: start;
+  padding-bottom: 1%;
+  justify-content: space-between;
   gap: 1%;
 
-  .item {
-    height: auto;
+  .jokes {
+    @include container();
+    padding-top: 5%;
+    justify-content: flex-start;
+    gap: 5%;
     width: 90%;
-    background-color: antiquewhite;
+    height: 90%;
+
+    .item {
+      height: auto;
+      width: 90%;
+      background-color: antiquewhite;
+    }
   }
+
+  button {
+    @include button();
+  }
+
 }
 
 

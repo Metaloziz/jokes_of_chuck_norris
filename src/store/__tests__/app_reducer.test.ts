@@ -1,6 +1,6 @@
 import {
   addJokeAC,
-  app_reducer, deleteCurrentJokeAC, deleteJokeFromListAC, getJokeTC,
+  app_reducer, deleteCurrentJokeAC, deleteJokeFromListAC, deleteJokesAC, getJokeTC,
 
 } from "store/app_reducer";
 import {RootStateType} from "store/store";
@@ -68,5 +68,14 @@ describe('app reducer', () => {
 
     expect(endState).not.toBe(appState)
     expect(endState.jokes.length).toBe(appState.jokes.length - 1)
+  })
+  test('delete all jokes', () => {
+
+    const {appState} = initialState
+    const action = deleteJokesAC()
+    const endState = app_reducer(appState, action)
+
+    expect(endState).not.toBe(appState)
+    expect(endState.jokes.length).toBe(0)
   })
 })

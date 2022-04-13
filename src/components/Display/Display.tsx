@@ -40,8 +40,6 @@ export const Display = () => {
       let items: JokeType[] = JSON.parse(jokesLocalStorage)
       items.forEach((el) => dispatch(addJokeAC(el)))
     }
-
-
   }, [])
 
   const getJoke = async () => {
