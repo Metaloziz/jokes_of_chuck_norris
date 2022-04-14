@@ -1,14 +1,14 @@
 import { FC } from 'react';
 
 import './App.css';
-import { BrowserRouter, Route, Routes } from 'react-router-dom';
+import { HashRouter, Route, Routes } from 'react-router-dom';
 
 import { Display, List, NavLinkComponent } from 'components';
 import { path } from 'utils/enum';
 
 const App: FC = () => (
   <div className="App">
-    <BrowserRouter>
+    <HashRouter>
       <div className="buttons">
         <NavLinkComponent name={path.DISPLAY} />
         <NavLinkComponent name={path.LIST} />
@@ -18,7 +18,7 @@ const App: FC = () => (
         <Route path={`/${path.LIST}`} element={<List />} />
         <Route path="/*" element={<div>main</div>} />
       </Routes>
-    </BrowserRouter>
+    </HashRouter>
   </div>
 );
 
