@@ -1,5 +1,6 @@
 {
-  "name": "my-app",
+  "name": "jokes_of_chuck_norris",
+  "homepage": "https://Metaloziz.github.io/jokes_of_chuck_norris",
   "version": "0.1.0",
   "private": true,
   "dependencies": {
