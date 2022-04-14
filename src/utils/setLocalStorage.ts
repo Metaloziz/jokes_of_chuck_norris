@@ -1,14 +1,14 @@
-import {JokeType} from "api/api";
+import { JokeType } from 'api';
+import { commonConstants, storageKeys } from 'utils';
 
-
-export const setJokeLocalStorage = (props: JokeType) => {
-  if (props.value !== "" && props.value !== 'loading ... ') {
-    localStorage.setItem('joke', JSON.stringify(props))
+export const setJokeLocalStorage = (props: JokeType): void => {
+  if (props.value !== '' && props.value !== 'loading ... ') {
+    localStorage.setItem(storageKeys.JOKE, JSON.stringify(props));
   }
-}
+};
 
-export const setJokesLocalStorage = (props: JokeType[]) => {
-  if (props.length !== 0) {
-    localStorage.setItem('jokes', JSON.stringify(props))
+export const setJokesLocalStorage = (props: JokeType[]): void => {
+  if (props.length !== commonConstants.EMPTY_ARR) {
+    localStorage.setItem(storageKeys.JOKES, JSON.stringify(props));
   }
-}
+};

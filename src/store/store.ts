@@ -1,17 +1,15 @@
-import {combineReducers, configureStore} from "@reduxjs/toolkit";
-import {app_reducer} from "store/app_reducer";
-import thunkMiddleware from 'redux-thunk'
+import { combineReducers, configureStore } from '@reduxjs/toolkit';
+import thunkMiddleware from 'redux-thunk';
+
+import { appReducer } from 'store/app_reducer';
 
 const rootReducer = combineReducers({
-  appState: app_reducer,
-})
-
+  appState: appReducer,
+});
 
 export const store = configureStore({
   reducer: rootReducer,
-  middleware: (getDefaultMiddleware) =>
-    getDefaultMiddleware().prepend(thunkMiddleware)
-})
+  middleware: getDefaultMiddleware => getDefaultMiddleware().prepend(thunkMiddleware),
+});
 
-export type RootStateType = ReturnType<typeof store.getState>
-export type AppDispatch = ReturnType<typeof store.dispatch>
+export type RootStateType = ReturnType<typeof store.getState>;

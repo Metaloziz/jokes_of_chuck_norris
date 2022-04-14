@@ -1,12 +1,16 @@
-import React, {FC} from "react";
-import {NavLink} from "react-router-dom";
+import { FC } from 'react';
+
+import { NavLink } from 'react-router-dom';
 
 type NavLinkComponentTyp = {
-  name: string
-}
-export const NavLinkComponent: FC<NavLinkComponentTyp> = ({name}) =>
+  name: string;
+};
+export const NavLinkComponent: FC<NavLinkComponentTyp> = ({ name }) => (
   <NavLink to={`/${name}`}>
-    {({isActive}) => (
-      <button disabled={isActive}>{name}</button>
+    {({ isActive }) => (
+      <button type="button" disabled={isActive}>
+        {name}
+      </button>
     )}
-  </NavLink>;
+  </NavLink>
+);

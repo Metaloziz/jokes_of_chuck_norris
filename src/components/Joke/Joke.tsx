@@ -1,26 +1,28 @@
-import style from "./Joke.module.scss";
-import {FC} from "react";
-import {JokeType} from "api/api";
+import { FC } from 'react';
+
+import style from './Joke.module.scss';
+
+import { JokeType } from 'api';
 
 type JokeTypeComponent = {
-  localJoke: JokeType
-  addJokeToList: (value: JokeType) => void
-  isTheSameJoke: boolean
-}
-
+  localJoke: JokeType;
+  addJokeToList: (value: JokeType) => void;
+  isTheSameJoke: boolean;
+};
 
 export const Joke: FC<JokeTypeComponent> = ({
-                                              localJoke,
-                                              addJokeToList,
-                                              isTheSameJoke
-                                            }) => {
+  localJoke,
+  addJokeToList,
+  isTheSameJoke,
+}) => {
+  const nameButton = isTheSameJoke ? 'delete joke from the list' : 'add to my list';
 
-
-  const nameButton = isTheSameJoke ? 'delete joke from the list' : 'add to my list'
-
-  return <div
-    className={style.displayText}>
-    <div>{localJoke.value}</div>
-    <button onClick={() => addJokeToList(localJoke)}>{nameButton}</button>
-  </div>
+  return (
+    <div className={style.displayText}>
+      <div>{localJoke.value}</div>
+      <button type="button" onClick={() => addJokeToList(localJoke)}>
+        {nameButton}
+      </button>
+    </div>
+  );
 };

@@ -1,44 +1,54 @@
-import React, {useEffect} from "react";
-import style from './List.module.scss'
-import {useDispatch, useSelector} from "react-redux";
-import {getJokesSelector, isInitializedSelector} from "utils/selectors";
+import { FC, useEffect } from 'react';
+
+import { useDispatch, useSelector } from 'react-redux';
+
+import style from './List.module.scss';
+
+import { JokeList } from 'components';
+import { deleteCurrentJokeAC, deleteJokesAC, setInitializedAC } from 'store';
 import {
-  deleteCurrentJokeAC,
-  deleteJokesAC,
-  setInitializedAC
-} from "store/app_reducer";
-import {JokeList} from "components/JokeList/JokeList";
-import {getLocalStorageData} from "utils/getLocakStorageData";
+  commonConstants,
+  getLocalStorageData,
+  getJokesSelector,
+  isInitializedSelector,
+} from 'utils';
 
-export const List = () => {
-
-  const dispatch = useDispatch()
-  const jokes = useSelector(getJokesSelector)
-  const isInitialized = useSelector(isInitializedSelector)
+export const List: FC = () => {
+  const dispatch = useDispatch();
+  const jokes = useSelector(getJokesSelector);
+  const isInitialized = useSelector(isInitializedSelector);
 
   useEffect(() => {
     if (!isInitialized) {
-      dispatch(setInitializedAC())
-      getLocalStorageData(dispatch)
+      dispatch(setInitializedAC());
+      getLocalStorageData(dispatch);
     }
-  }, [])
+  }, []);
 
+  const deleteJokes = (): void => {
+    dispatch(deleteJokesAC());
+  };
+  const deleteJoke = (jokeId: string): void => {
+    dispatch(deleteCurrentJokeAC(jokeId));
+  };
 
-  const deleteJokes = () => {
-    dispatch(deleteJokesAC())
-  }
-  const deleteJoke = (jokeId: string) => {
-    dispatch(deleteCurrentJokeAC(jokeId))
-  }
-
-  return <div className={style.container}>
-    <div className={style.jokes}>
-      {jokes.map(({id, value}) => <JokeList deleteJoke={() => deleteJoke(id)}
-                                            key={id} value={value}/>)}</div>
-    <div>
-      <button disabled={jokes.length === 0} className={style.deleteJokes}
-              onClick={deleteJokes}>delete all jokes
-      </button>
+  return (
+    <div className={style.container}>
+      <div className={style.jokes}>
+        {jokes.map(({ id, value }) => (
+          <JokeList deleteJoke={() => deleteJoke(id)} key={id} value={value} />
+        ))}
+      </div>
+      <div>
+        <button
+          type="button"
+          disabled={jokes.length === commonConstants.FIRST_JOKE}
+          className={style.deleteJokes}
+          onClick={deleteJokes}
+        >
+          delete all jokes
+        </button>
+      </div>
     </div>
-  </div>
+  );
 };

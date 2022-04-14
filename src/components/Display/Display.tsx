@@ -1,96 +1,105 @@
-import style from 'components/Display/Display.module.scss'
+import { FC, useEffect, useState } from 'react';
+
+import { useDispatch, useSelector } from 'react-redux';
+
+import style from './Display.module.scss';
+
+import { JokeType } from 'api';
+import { Joke } from 'components';
 import {
   addJokeAC,
   deleteCurrentJokeAC,
   deleteLassAddedJokeAC,
   getJokeTC,
-  setInitializedAC
-} from "store/app_reducer";
-import {useDispatch, useSelector} from "react-redux";
-import {useEffect, useState} from "react";
+  setInitializedAC,
+} from 'store';
 import {
+  commonConstants,
   getJokeSelector,
   getJokesSelector,
-  isInitializedSelector
-} from "utils/selectors";
-import {Joke} from "components/Joke/Joke";
-import {JokeType} from "api/api";
-import {setJokeLocalStorage, setJokesLocalStorage} from "utils/setLocalStorage";
-import {getLocalStorageData} from "utils/getLocakStorageData";
+  getLocalStorageData,
+  isInitializedSelector,
+  setJokeLocalStorage,
+  setJokesLocalStorage,
+} from 'utils';
 
-
-export const Display = () => {
-
-  const dispatch = useDispatch()
-  const joke = useSelector(getJokeSelector)
-  const jokes = useSelector(getJokesSelector)
-  const isInitialized = useSelector(isInitializedSelector)
-  const [isTimer, setIsTimer] = useState<NodeJS.Timer | null>(null)
-  const [time, setTime] = useState<number>(5)
+export const Display: FC = () => {
+  const dispatch = useDispatch();
+  const joke = useSelector(getJokeSelector);
+  const jokes = useSelector(getJokesSelector);
+  const isInitialized = useSelector(isInitializedSelector);
+  // eslint-disable-next-line no-undef
+  const [isTimer, setIsTimer] = useState<NodeJS.Timer | null>(null);
+  const [timer, setTime] = useState<number>(commonConstants.MAX_TIMER_SEC);
 
   useEffect(() => {
-    setJokeLocalStorage(joke)
-  }, [joke])
+    setJokeLocalStorage(joke);
+  }, [joke]);
 
   useEffect(() => {
-    setJokesLocalStorage(jokes)
-  }, [jokes])
+    setJokesLocalStorage(jokes);
+  }, [jokes]);
 
   useEffect(() => {
     if (!isInitialized) {
-      dispatch(setInitializedAC())
-      getLocalStorageData(dispatch)
+      dispatch(setInitializedAC());
+      getLocalStorageData(dispatch);
     }
-  }, [])
+  }, []);
 
-  const getJoke = () => {
-    dispatch(getJokeTC.fulfilled({id: 'fake', value: 'loading ... '}, ''))
-    dispatch(getJokeTC())
-  }
+  const getJoke = (): void => {
+    dispatch(getJokeTC.fulfilled({ id: 'fake', value: 'loading ... ' }, ''));
+    dispatch(getJokeTC());
+  };
 
-  const getJokesEveryTimer = () => {
+  const getJokesEveryTimer = (): void => {
     if (!isTimer) {
       const intervalId = setInterval(() => {
         setTime(time => {
-          if (time !== 0) return time - 1
-          getJoke()
-          return 5
-        })
-      }, 1000)
+          if (time !== commonConstants.MIN_TIMER_SEC)
+            return time - commonConstants.DECREMENT_TIMER_SEC;
+          getJoke();
+          return commonConstants.MAX_TIMER_SEC;
+        });
+      }, commonConstants.TIMER_MS);
 
-      setIsTimer(intervalId)
+      setIsTimer(intervalId);
     } else {
-      clearInterval(isTimer)
-      setIsTimer(null)
+      clearInterval(isTimer);
+      setIsTimer(null);
     }
-  }
+  };
 
-  const addJokeToList = (joke: JokeType) => {
-    const result = jokes.find((item) => joke.id === item.id)
+  const addJokeToList = (jokeLocal: JokeType): void => {
+    const result = jokes.find(item => jokeLocal.id === item.id);
     if (!result) {
-      if (jokes.length === 4) dispatch(deleteLassAddedJokeAC())
-      dispatch(addJokeAC(joke))
+      if (jokes.length === commonConstants.MAX_JOKES) dispatch(deleteLassAddedJokeAC());
+      dispatch(addJokeAC(jokeLocal));
     } else {
-      dispatch(deleteCurrentJokeAC(joke.id))
+      dispatch(deleteCurrentJokeAC(jokeLocal.id));
     }
-  }
+  };
 
-  const nameGetJokeEveryTimerButton = !!isTimer ? "stop" : "get a joke every 3 sec"
-  const isDisableGetJokeButton = !!isTimer || joke.value === 'loading ... '
+  const nameGetJokeEveryTimerButton = isTimer ? 'stop' : 'get a joke every 3 sec';
+  const isDisableGetJokeButton = !!isTimer || joke.value === 'loading ... ';
 
   return (
     <div className={style.container}>
       <div className={style.display}>
-        <Joke localJoke={joke}
-              addJokeToList={addJokeToList}
-              isTheSameJoke={joke.id === jokes[0]?.id}/>
-        <div className={style.timer}>
-          {isTimer && <div>{time}</div>}
-        </div>
+        <Joke
+          localJoke={joke}
+          addJokeToList={addJokeToList}
+          isTheSameJoke={joke.id === jokes[commonConstants.FIRST_JOKE]?.id}
+        />
+        <div className={style.timer}>{isTimer && <div>{timer}</div>}</div>
       </div>
       <div className={style.buttons}>
-        <button disabled={isDisableGetJokeButton} onClick={getJoke}>get</button>
-        <button onClick={getJokesEveryTimer}>{nameGetJokeEveryTimerButton}</button>
+        <button type="button" disabled={isDisableGetJokeButton} onClick={getJoke}>
+          get
+        </button>
+        <button type="button" onClick={getJokesEveryTimer}>
+          {nameGetJokeEveryTimerButton}
+        </button>
       </div>
     </div>
   );

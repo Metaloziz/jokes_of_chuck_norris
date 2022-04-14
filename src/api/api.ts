@@ -1,25 +1,16 @@
-import axios from "axios";
+import axios from 'axios';
 
 type ApiResponseType = {
-  id: string
-  value: string
-  // categories: [],
-  // created_at: string
-  // icon_url: string
-  // updated_at: string
-  // url: string
-}
+  id: string;
+  value: string;
+};
 
-export type JokeType = Pick<ApiResponseType, 'value' | 'id'>
-
+export type JokeType = Pick<ApiResponseType, 'value' | 'id'>;
 
 export const instance = axios.create({
-  baseURL: 'https://api.chucknorris.io/jokes/random'
-})
-
+  baseURL: process.env.REACT_APP_BASE_URL,
+});
 
 export const appRequest = {
-  getJoke: () => {
-    return instance.get<JokeType>('/')
-  }
-}
+  getJoke: () => instance.get<JokeType>('/'),
+};

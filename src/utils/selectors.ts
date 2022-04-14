@@ -1,14 +1,9 @@
-import {RootStateType} from "store/store";
-import {JokeType} from "api/api";
+import { JokeType } from 'api/api';
+import { RootStateType } from 'store/store';
 
-export const getJokeSelector = (state: RootStateType): JokeType => {
-  return state.appState.joke
-}
-export const getJokesSelector = (state: RootStateType): JokeType[] => {
-  return state.appState.jokes
-}
+export const getJokeSelector = (state: RootStateType): JokeType => state.appState.joke;
+export const getJokesSelector = (state: RootStateType): JokeType[] =>
+  state.appState.jokes;
 
-export const isInitializedSelector = (state: RootStateType): boolean => {
-  return state.appState.isInitialize
-}
-
+export const isInitializedSelector = (state: RootStateType): boolean =>
+  state.appState.isInitialize;

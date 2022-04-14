@@ -1,28 +1,25 @@
-import React from 'react';
+import { FC } from 'react';
+
 import './App.css';
-import {Display} from "components/Display/Display";
-import {List} from "components/List/List";
-import {BrowserRouter, Route, Routes} from "react-router-dom";
-import {NavLinkComponent} from "components/NavLinkComponent/NavLinkComponent";
+import { BrowserRouter, Route, Routes } from 'react-router-dom';
 
+import { Display, List, NavLinkComponent } from 'components';
+import { path } from 'utils/enum';
 
-function App() {
-
-  return (
-    <div className="App">
-      <BrowserRouter>
-        <div className={'buttons'}>
-          <NavLinkComponent name={'display'}/>
-          <NavLinkComponent name={'list'}/>
-        </div>
-        <Routes>
-          <Route path="/display" element={<Display/>}/>
-          <Route path='/list' element={<List/>}/>
-          <Route path='/*' element={<div>main</div>}/>
-        </Routes>
-      </BrowserRouter>
-    </div>
-  );
-}
+const App: FC = () => (
+  <div className="App">
+    <BrowserRouter>
+      <div className="buttons">
+        <NavLinkComponent name={path.DISPLAY} />
+        <NavLinkComponent name={path.LIST} />
+      </div>
+      <Routes>
+        <Route path={`/${path.DISPLAY}`} element={<Display />} />
+        <Route path={`/${path.LIST}`} element={<List />} />
+        <Route path="/*" element={<div>main</div>} />
+      </Routes>
+    </BrowserRouter>
+  </div>
+);
 
 export default App;
