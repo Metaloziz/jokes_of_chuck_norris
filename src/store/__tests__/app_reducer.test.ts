@@ -1,6 +1,11 @@
 import {
   addJokeAC,
-  app_reducer, deleteCurrentJokeAC, deleteJokeFromListAC, deleteJokesAC, getJokeTC,
+  app_reducer,
+  deleteCurrentJokeAC,
+  deleteJokeFromListAC,
+  deleteJokesAC,
+  getJokeTC,
+  setInitializedAC,
 
 } from "store/app_reducer";
 import {RootStateType} from "store/store";
@@ -19,7 +24,8 @@ beforeEach(() => {
   initialState = {
     appState: {
       joke: {id: '', value: ''},
-      jokes: [...jokes]
+      jokes: [...jokes],
+      isInitialize: false
     }
   }
 })
@@ -76,5 +82,15 @@ describe('app reducer', () => {
 
     expect(endState).not.toBe(appState)
     expect(endState.jokes.length).toBe(0)
+  })
+
+  test('set initialize', () => {
+
+    const {appState} = initialState
+    const action = setInitializedAC()
+    const endState = app_reducer(appState, action)
+
+    expect(endState).not.toBe(appState)
+    expect(endState.isInitialize).toBeTruthy()
   })
 })

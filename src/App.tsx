@@ -18,7 +18,7 @@ function App() {
         <Routes>
           <Route path="/display" element={<Display/>}/>
           <Route path='/list' element={<List/>}/>
-          <Route path='/*' element={<List/>}/>
+          <Route path='/*' element={<div>main</div>}/>
         </Routes>
       </BrowserRouter>
     </div>

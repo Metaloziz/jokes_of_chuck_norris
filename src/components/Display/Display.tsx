@@ -3,15 +3,21 @@ import {
   addJokeAC,
   deleteCurrentJokeAC,
   deleteJokeFromListAC,
-  getJokeTC
+  getJokeTC,
+  setInitializedAC
 } from "store/app_reducer";
 import {useDispatch, useSelector} from "react-redux";
 import {useEffect, useState} from "react";
-import {getJokeSelector, getJokesSelector} from "utils/selectors";
+import {
+  getJokeSelector,
+  getJokesSelector,
+  isInitializedSelector
+} from "utils/selectors";
 import {Joke} from "components/Joke/Joke";
 import {Timer} from "components/Timer/Timer";
 import {JokeType} from "api/api";
 import {setJokeLocalStorage, setJokesLocalStorage} from "utils/setLocalStorage";
+import {getLocalStorageData} from "utils/getLocakStorageData";
 
 
 export const Display = () => {
@@ -19,7 +25,10 @@ export const Display = () => {
   const dispatch = useDispatch()
   const joke = useSelector(getJokeSelector)
   const jokes = useSelector(getJokesSelector)
+  const isInitialized = useSelector(isInitializedSelector)
   const [isTimer, setIsTimer] = useState<NodeJS.Timer | null>(null)
+
+  const theSame = joke.id === jokes[0]?.id
 
   useEffect(() => {
     setJokeLocalStorage(joke)
@@ -30,16 +39,12 @@ export const Display = () => {
   }, [jokes])
 
   useEffect(() => {
-    let jokeLocalStorage = localStorage.getItem('joke')
-    let jokesLocalStorage = localStorage.getItem('jokes')
-    if (!!jokeLocalStorage) {
-      let item: JokeType = JSON.parse(jokeLocalStorage)
-      dispatch(getJokeTC.fulfilled(item, ''))
+
+    if (!isInitialized) {
+      dispatch(setInitializedAC())
+      getLocalStorageData(dispatch)
     }
-    if (!!jokesLocalStorage) {
-      let items: JokeType[] = JSON.parse(jokesLocalStorage)
-      items.forEach((el) => dispatch(addJokeAC(el)))
-    }
+
   }, [])
 
   const getJoke = async () => {
@@ -74,7 +79,8 @@ export const Display = () => {
   return (
     <div className={style.container}>
       <div className={style.display}>
-        <Joke localJoke={joke} addJokeToList={addJokeToList}/>
+        <Joke localJoke={joke} addJokeToList={addJokeToList}
+              isTheSameJoke={theSame}/>
         <div>
           {isTimer && <Timer/>}
         </div>

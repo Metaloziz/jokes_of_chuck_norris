@@ -6,7 +6,8 @@ const initialState = {
     id: '',
     value: ''
   } as JokeType,
-  jokes: [] as JokeType[]
+  jokes: [] as JokeType[],
+  isInitialize: false
 }
 
 export const getJokeTC = createAsyncThunk('app/getJokeTC', async () => {
@@ -32,6 +33,9 @@ export const slice = createSlice({
       state.jokes = []
       localStorage.removeItem('jokes')
     },
+    setInitializedAC(state) {
+      state.isInitialize = true
+    }
   },
   extraReducers: builder => {
     builder.addCase(getJokeTC.fulfilled, (state, action) => {
@@ -45,6 +49,6 @@ export const {
   addJokeAC,
   deleteJokeFromListAC,
   deleteCurrentJokeAC,
-  deleteJokesAC
+  deleteJokesAC, setInitializedAC
 } = slice.actions
 

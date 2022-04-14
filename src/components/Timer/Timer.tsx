@@ -1,20 +1,19 @@
 import {useEffect, useState} from "react";
 
+const timer = 5
+
 export const Timer = () => {
 
-  const [time, setTime] = useState<number>(5)
+  const [time, setTime] = useState<number>(timer)
+
 
   useEffect(() => {
 
-    const intervalId = setInterval(() => {
+    setInterval(() => {
       console.log('tick')
-      setTime(time - 1)
+      setTime(time => time !== 1 ? time - 1 : 5
+      )
     }, 1000)
-
-    return () => {
-      console.log('end')
-      clearInterval(intervalId)
-    }
 
   }, [])
 

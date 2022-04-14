@@ -1,13 +1,27 @@
-import React from "react";
+import React, {useEffect} from "react";
 import style from './List.module.scss'
 import {useDispatch, useSelector} from "react-redux";
-import {getJokesSelector} from "utils/selectors";
-import {deleteCurrentJokeAC, deleteJokesAC} from "store/app_reducer";
+import {getJokesSelector, isInitializedSelector} from "utils/selectors";
+import {
+  deleteCurrentJokeAC,
+  deleteJokesAC,
+  setInitializedAC
+} from "store/app_reducer";
 import {JokeList} from "components/JokeList/JokeList";
+import {getLocalStorageData} from "utils/getLocakStorageData";
 
 export const List = () => {
 
+  const isInitialized = useSelector(isInitializedSelector)
   const dispatch = useDispatch()
+
+  useEffect(() => {
+    if (!isInitialized) {
+      dispatch(setInitializedAC())
+      getLocalStorageData(dispatch)
+    }
+  }, [])
+
 
   const deleteJokes = () => {
     dispatch(deleteJokesAC())

@@ -8,3 +8,7 @@ export const getJokesSelector = (state: RootStateType): JokeType[] => {
   return state.appState.jokes
 }
 
+export const isInitializedSelector = (state: RootStateType): boolean => {
+  return state.appState.isInitialize
+}
+
