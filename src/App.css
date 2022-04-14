@@ -8,10 +8,16 @@
     width: 100vw;
     height: 100vh;
     display: flex;
+    flex-direction: column;
     justify-content: center;
     align-items: center;
     background-color: rgba(59, 53, 53, 0.87);
     gap: 50px;
+}
+
+.buttons button {
+    height: 50px;
+    width: 100px;
 }
 
 .card {

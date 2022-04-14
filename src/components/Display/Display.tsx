@@ -69,6 +69,8 @@ export const Display = () => {
     }
   }
 
+  const nameButton = !!isTimer ? "stop" : "get a joke every 3 sec"
+
   return (
     <div className={style.container}>
       <div className={style.display}>
@@ -79,7 +81,7 @@ export const Display = () => {
       </div>
       <div className={style.buttons}>
         <button disabled={!!isTimer} onClick={getJoke}>get</button>
-        <button onClick={getJokesEveryTimer}>get a joke every 3 sec</button>
+        <button onClick={getJokesEveryTimer}>{nameButton}</button>
       </div>
     </div>
   );

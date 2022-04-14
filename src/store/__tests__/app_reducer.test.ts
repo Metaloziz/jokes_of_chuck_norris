@@ -22,8 +22,6 @@ beforeEach(() => {
       jokes: [...jokes]
     }
   }
-
-
 })
 
 
@@ -69,6 +67,7 @@ describe('app reducer', () => {
     expect(endState).not.toBe(appState)
     expect(endState.jokes.length).toBe(appState.jokes.length - 1)
   })
+
   test('delete all jokes', () => {
 
     const {appState} = initialState
