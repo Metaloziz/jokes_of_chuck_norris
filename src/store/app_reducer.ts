@@ -1,6 +1,7 @@
 import { createAsyncThunk, createSlice, PayloadAction } from '@reduxjs/toolkit';
 
 import { appRequest, JokeType } from 'api/api';
+import { storageKeys } from 'utils';
 
 const initialState = {
   joke: {
@@ -29,11 +30,11 @@ export const slice = createSlice({
       state.jokes.splice(arrLength - 1, 1);
     },
     deleteCurrentJokeAC(state, action: PayloadAction<string>) {
-      state.jokes = state.jokes.filter(el => el.id !== action.payload);
+      state.jokes = state.jokes.filter(({ id }) => id !== action.payload);
     },
     deleteJokesAC(state) {
       state.jokes = [];
-      localStorage.removeItem('jokes');
+      localStorage.removeItem(storageKeys.JOKE);
     },
     setInitializedAC(state) {
       state.isInitialize = true;

@@ -1,4 +1,4 @@
-import { FC, useEffect, useState } from 'react';
+import { FC, useEffect } from 'react';
 
 import { useDispatch, useSelector } from 'react-redux';
 
@@ -21,6 +21,7 @@ import {
   isInitializedSelector,
   setJokeLocalStorage,
   setJokesLocalStorage,
+  useJokesEveryTimer,
 } from 'utils';
 
 export const Display: FC = () => {
@@ -28,9 +29,6 @@ export const Display: FC = () => {
   const joke = useSelector(getJokeSelector);
   const jokes = useSelector(getJokesSelector);
   const isInitialized = useSelector(isInitializedSelector);
-  // eslint-disable-next-line no-undef
-  const [isTimer, setIsTimer] = useState<NodeJS.Timer | null>(null);
-  const [timer, setTime] = useState<number>(commonConstants.MAX_TIMER_SEC);
 
   useEffect(() => {
     setJokeLocalStorage(joke);
@@ -52,26 +50,10 @@ export const Display: FC = () => {
     dispatch(getJokeTC());
   };
 
-  const getJokesEveryTimer = (): void => {
-    if (!isTimer) {
-      const intervalId = setInterval(() => {
-        setTime(time => {
-          if (time !== commonConstants.MIN_TIMER_SEC)
-            return time - commonConstants.DECREMENT_TIMER_SEC;
-          getJoke();
-          return commonConstants.MAX_TIMER_SEC;
-        });
-      }, commonConstants.TIMER_MS);
-
-      setIsTimer(intervalId);
-    } else {
-      clearInterval(isTimer);
-      setIsTimer(null);
-    }
-  };
+  const { isTimer, timer, getJokesEveryTimer } = useJokesEveryTimer(getJoke);
 
   const addJokeToList = (jokeLocal: JokeType): void => {
-    const result = jokes.find(item => jokeLocal.id === item.id);
+    const result = jokes.find(({ id }) => jokeLocal.id === id);
     if (!result) {
       if (jokes.length === commonConstants.MAX_JOKES) dispatch(deleteLassAddedJokeAC());
       dispatch(addJokeAC(jokeLocal));
