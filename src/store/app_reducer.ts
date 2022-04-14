@@ -22,7 +22,7 @@ export const slice = createSlice({
     addJokeAC(state, action: PayloadAction<JokeType>) {
       state.jokes.unshift(action.payload)
     },
-    deleteJokeFromListAC(state) {
+    deleteLassAddedJokeAC(state) {
       let arrLength = state.jokes.length
       state.jokes.splice(arrLength - 1, 1)
     },
@@ -47,7 +47,7 @@ export const slice = createSlice({
 export const app_reducer = slice.reducer
 export const {
   addJokeAC,
-  deleteJokeFromListAC,
+  deleteLassAddedJokeAC,
   deleteCurrentJokeAC,
   deleteJokesAC, setInitializedAC
 } = slice.actions

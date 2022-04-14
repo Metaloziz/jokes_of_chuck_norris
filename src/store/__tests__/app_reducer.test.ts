@@ -2,7 +2,7 @@ import {
   addJokeAC,
   app_reducer,
   deleteCurrentJokeAC,
-  deleteJokeFromListAC,
+  deleteLassAddedJokeAC,
   deleteJokesAC,
   getJokeTC,
   setInitializedAC,
@@ -56,7 +56,7 @@ describe('app reducer', () => {
   test('delete last joke from jokes', () => {
 
     const {appState} = initialState
-    const action = deleteJokeFromListAC()
+    const action = deleteLassAddedJokeAC()
     const endState = app_reducer(appState, action)
 
     expect(endState).not.toBe(appState)

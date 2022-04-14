@@ -1,4 +1,4 @@
-import style from "components/Display/Display.module.scss";
+import style from "./Joke.module.scss";
 import {FC} from "react";
 import {JokeType} from "api/api";
 
