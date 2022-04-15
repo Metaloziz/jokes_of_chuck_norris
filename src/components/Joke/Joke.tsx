@@ -18,7 +18,7 @@ export const Joke: FC<JokeTypeComponent> = ({
 }) => {
   const nameButton = isTheSameJoke ? 'delete joke from the list' : 'add to my list'
 
-  const isDisable = localJoke.value === LOADING
+  const isDisable = localJoke.value === LOADING || localJoke.value === ''
 
   return (
     <div className={style.displayText}>
