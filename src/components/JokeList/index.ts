@@ -1,1 +1,1 @@
-export { JokeList } from './JokeList';
+export { JokeList } from './JokeList'

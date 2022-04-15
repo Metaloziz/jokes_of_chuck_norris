@@ -1,11 +1,11 @@
-import React, { FC } from 'react';
+import React, { FC } from 'react'
 
-import style from './JokeList.module.scss';
+import style from './JokeList.module.scss'
 
 type JokeListType = {
-  value: string;
-  deleteJoke: () => void;
-};
+  value: string
+  deleteJoke: () => void
+}
 export const JokeList: FC<JokeListType> = ({ value, deleteJoke }) => (
   <div className={style.joke}>
     <div className={style.text}>{value}</div>
@@ -13,4 +13,4 @@ export const JokeList: FC<JokeListType> = ({ value, deleteJoke }) => (
       delete
     </button>
   </div>
-);
+)

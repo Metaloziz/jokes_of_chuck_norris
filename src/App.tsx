@@ -1,26 +1,24 @@
-import { FC } from 'react';
+import { FC } from 'react'
 
-import './App.css';
-import { HashRouter, Route, Routes } from 'react-router-dom';
+import './App.css'
+import { Navigate, Route, Routes } from 'react-router-dom'
 
-import { Display, List, NavLinkComponent } from 'components';
-import { path } from 'utils/enum';
+import { Display, List, NavLinkComponent } from 'components'
+import { path } from 'utils/enum'
 
 const App: FC = () => (
   <div className="App">
-    <HashRouter>
-      <div className="buttons">
-        <NavLinkComponent name={path.DISPLAY} />
-        <NavLinkComponent name={path.LIST} />
-      </div>
-      <Routes>
-        <Route path="/" element={<div>main</div>} />
-        <Route path={`${path.DISPLAY}`} element={<Display />} />
-        <Route path={`${path.LIST}`} element={<List />} />
-        <Route path="/*" element={<div>404</div>} />
-      </Routes>
-    </HashRouter>
+    <div className="buttons">
+      <NavLinkComponent name={path.DISPLAY} />
+      <NavLinkComponent name={path.LIST} />
+    </div>
+    <Routes>
+      <Route path="/" element={<Navigate to={`${path.DISPLAY}`} />} />
+      <Route path={`/${path.DISPLAY}`} element={<Display />} />
+      <Route path={`/${path.LIST}`} element={<List />} />
+      <Route path="/*" element={<Navigate to={`${path.DISPLAY}`} />} />
+    </Routes>
   </div>
-);
+)
 
-export default App;
+export default App

@@ -1,36 +1,41 @@
-import { FC, useEffect } from 'react';
+import { FC, useEffect } from 'react'
 
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux'
 
-import style from './List.module.scss';
+import style from './List.module.scss'
 
-import { JokeList } from 'components';
-import { deleteCurrentJokeAC, deleteJokesAC, setInitializedAC } from 'store';
+import { JokeList } from 'components'
+import { deleteCurrentJokeAC, deleteJokesAC, setInitializedAC } from 'store'
 import {
   commonConstants,
   getLocalStorageData,
   getJokesSelector,
   isInitializedSelector,
-} from 'utils';
+  setJokesLocalStorage,
+} from 'utils'
 
 export const List: FC = () => {
-  const dispatch = useDispatch();
-  const jokes = useSelector(getJokesSelector);
-  const isInitialized = useSelector(isInitializedSelector);
+  const dispatch = useDispatch()
+  const jokes = useSelector(getJokesSelector)
+  const isInitialized = useSelector(isInitializedSelector)
+
+  useEffect(() => {
+    setJokesLocalStorage(jokes)
+  }, [jokes])
 
   useEffect(() => {
     if (!isInitialized) {
-      dispatch(setInitializedAC());
-      getLocalStorageData(dispatch);
+      dispatch(setInitializedAC())
+      getLocalStorageData(dispatch)
     }
-  }, []);
+  }, [])
 
   const deleteJokes = (): void => {
-    dispatch(deleteJokesAC());
-  };
+    dispatch(deleteJokesAC())
+  }
   const deleteJoke = (jokeId: string): void => {
-    dispatch(deleteCurrentJokeAC(jokeId));
-  };
+    dispatch(deleteCurrentJokeAC(jokeId))
+  }
 
   return (
     <div className={style.container}>
@@ -50,5 +55,5 @@ export const List: FC = () => {
         </button>
       </div>
     </div>
-  );
-};
+  )
+}

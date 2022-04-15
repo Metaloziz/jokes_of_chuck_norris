@@ -19,3 +19,5 @@ export enum storageKeys {
   JOKE = 'joke',
   JOKES = 'jokes',
 }
+
+export const LOADING = 'loading ...'

@@ -1,10 +1,10 @@
-import { FC } from 'react';
+import { FC } from 'react'
 
-import { NavLink } from 'react-router-dom';
+import { NavLink } from 'react-router-dom'
 
 type NavLinkComponentTyp = {
-  name: string;
-};
+  name: string
+}
 export const NavLinkComponent: FC<NavLinkComponentTyp> = ({ name }) => (
   <NavLink to={`/${name}`}>
     {({ isActive }) => (
@@ -13,4 +13,4 @@ export const NavLinkComponent: FC<NavLinkComponentTyp> = ({ name }) => (
       </button>
     )}
   </NavLink>
-);
+)
