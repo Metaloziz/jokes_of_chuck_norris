@@ -14,9 +14,10 @@ const App: FC = () => (
         <NavLinkComponent name={path.LIST} />
       </div>
       <Routes>
-        <Route path={`/${path.DISPLAY}`} element={<Display />} />
-        <Route path={`/${path.LIST}`} element={<List />} />
-        <Route path="/*" element={<div>main</div>} />
+        <Route path="/" element={<div>main</div>} />
+        <Route path={`${path.DISPLAY}`} element={<Display />} />
+        <Route path={`${path.LIST}`} element={<List />} />
+        <Route path="/*" element={<div>404</div>} />
       </Routes>
     </HashRouter>
   </div>
