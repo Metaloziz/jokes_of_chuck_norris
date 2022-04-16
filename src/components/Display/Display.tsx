@@ -1,4 +1,4 @@
-import { FC, useEffect } from 'react'
+import { FC, useCallback, useEffect } from 'react'
 
 import { useDispatch, useSelector } from 'react-redux'
 
@@ -53,7 +53,7 @@ export const Display: FC = () => {
 
   const { isTimer, timer, getJokesEveryTimer } = useJokesEveryTimer(getJoke)
 
-  const addJokeToList = (jokeLocal: JokeType): void => {
+  const addJokeToList = useCallback((jokeLocal: JokeType): void => {
     const result = jokes.find(({ id }) => jokeLocal.id === id)
     if (!result) {
       if (jokes.length === commonConstants.MAX_JOKES) dispatch(deleteLassAddedJokeAC())
@@ -61,7 +61,7 @@ export const Display: FC = () => {
     } else {
       dispatch(deleteCurrentJokeAC(jokeLocal.id))
     }
-  }
+  }, [])
 
   const nameGetJokeEveryTimerButton = isTimer ? 'stop' : 'get a joke every 3 sec'
   const isDisableGetJokeButton = !!isTimer || joke.value === LOADING

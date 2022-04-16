@@ -1,4 +1,4 @@
-import { FC, useEffect } from 'react'
+import { FC, useCallback, useEffect } from 'react'
 
 import { useDispatch, useSelector } from 'react-redux'
 
@@ -8,8 +8,8 @@ import { JokeList } from 'components'
 import { deleteCurrentJokeAC, deleteJokesAC, setInitializedAC } from 'store'
 import {
   commonConstants,
-  getLocalStorageData,
   getJokesSelector,
+  getLocalStorageData,
   isInitializedSelector,
   setJokesLocalStorage,
 } from 'utils'
@@ -33,15 +33,15 @@ export const List: FC = () => {
   const deleteJokes = (): void => {
     dispatch(deleteJokesAC())
   }
-  const deleteJoke = (jokeId: string): void => {
+  const deleteJoke = useCallback((jokeId: string): void => {
     dispatch(deleteCurrentJokeAC(jokeId))
-  }
+  }, [])
 
   return (
     <div className={style.container}>
       <div className={style.jokes}>
         {jokes.map(({ id, value }) => (
-          <JokeList deleteJoke={() => deleteJoke(id)} key={id} value={value} />
+          <JokeList key={id} id={id} deleteJoke={deleteJoke} value={value} />
         ))}
       </div>
       <div>
